@@ -8,10 +8,13 @@ import json
 import pickle
 import yaml
 import pandas as pd
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import mlflow
 import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, ConfusionMatrixDisplay
 
 
 def main():
@@ -48,6 +51,15 @@ def main():
         mlflow.log_metric("accuracy", acc)
         mlflow.log_metric("f1_macro", f1)
 
+        # confusion matrix как график-артефакт
+        fig, ax = plt.subplots(figsize=(5, 5))
+        ConfusionMatrixDisplay.from_predictions(y_test, y_pred, ax=ax)
+        ax.set_title("Confusion matrix")
+        fig.tight_layout()
+        fig.savefig("confusion_matrix.png", dpi=120)
+        plt.close(fig)
+        mlflow.log_artifact("confusion_matrix.png")
+
         with open("model.pkl", "wb") as f:
             pickle.dump(model, f)
 
@@ -56,7 +68,7 @@ def main():
             json.dump(metrics, f, indent=2)
 
         mlflow.log_artifact("model.pkl")
-        mlflow.sklearn.log_model(model, name="model")
+        mlflow.sklearn.log_model(sk_model=model, artifact_path="model")
 
         print(f"accuracy={acc:.4f}, f1_macro={f1:.4f}")
 
