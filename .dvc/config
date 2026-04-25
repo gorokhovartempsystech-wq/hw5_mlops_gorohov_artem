@@ -1,2 +1,5 @@
 [core]
     analytics = false
+    remote = localstorage
+['remote "localstorage"']
+    url = ../../hw5_mlops_dvcstorage
