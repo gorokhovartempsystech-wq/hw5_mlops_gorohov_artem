@@ -1,1 +1,10 @@
 /model.pkl
+
+# MLflow local
+mlflow.db
+mlruns/
+
+# Стандартный python мусор
+__pycache__/
+*.pyc
+.DS_Store
