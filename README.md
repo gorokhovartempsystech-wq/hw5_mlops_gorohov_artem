@@ -13,8 +13,8 @@
 ## Как запустить
 
 ```bash
-git clone https://github.com/gorokhovartempsystech-wq/hw5_mlops_Горохов_Артем.git
-cd hw5_mlops_Горохов_Артем
+git clone https://github.com/gorokhovartempsystech-wq/hw5_mlops_gorohov_artem.git
+cd hw5_mlops_gorohov_artem
 pip install -r requirements.txt
 dvc pull
 dvc repro
